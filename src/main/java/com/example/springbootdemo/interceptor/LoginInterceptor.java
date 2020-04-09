@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 拦截器，如果controller上添加了注解@TokenLogin的，当前用户没有登录，则会返回404
+ * 拦截器，如果controller上添加了注解@TokenLogin的，当前用户没有登录，则会返回500
  *
  * @author lachen
  */
@@ -22,7 +22,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 
     /**
-     * @return 返回true 就可以跳转刀controller 否则返回404
+     * @return 返回true 就可以跳转刀controller 否则返回500
      * @throws Exception exception
      */
     @Override
@@ -40,7 +40,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         // 先从请求头中获取token 如果没有 则从参数中获取
         String token = request.getHeader(TOKEN_KEY);
         if (StringUtils.isBlank(token)) {
-            token = (String) request.getAttribute(TOKEN_KEY);
+            token = request.getParameter(TOKEN_KEY);
         }
 
         if (StringUtils.isBlank(token)) {

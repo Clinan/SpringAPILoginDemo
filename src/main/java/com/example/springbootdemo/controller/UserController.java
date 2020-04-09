@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
 
-    @RequestMapping
+    @RequestMapping("test")
     @TokenLogin
     public String testLogin(@LoginUser User user) {
-        return "用户[" + user.getUsername() + "]已登录";
+        return "user[" + user.getUsername() + "]is login";
     }
 
 }

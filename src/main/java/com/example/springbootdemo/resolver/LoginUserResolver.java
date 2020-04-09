@@ -1,7 +1,7 @@
 package com.example.springbootdemo.resolver;
 
-import com.example.springbootdemo.interceptor.LoginInterceptor;
 import com.example.springbootdemo.annotation.LoginUser;
+import com.example.springbootdemo.interceptor.LoginInterceptor;
 import com.example.springbootdemo.model.User;
 import com.example.springbootdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class LoginUserResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
-        return methodParameter.getParameterType().isAssignableFrom(User.class) && methodParameter.hasMethodAnnotation(LoginUser.class);
+        return methodParameter.getParameterType().isAssignableFrom(User.class) && methodParameter.hasParameterAnnotation(LoginUser.class);
     }
 
     @Override

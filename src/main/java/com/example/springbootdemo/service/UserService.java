@@ -7,5 +7,5 @@ import com.example.springbootdemo.model.User;
  */
 public interface UserService {
 
-    public User getByUserId(Long userId);
+    User getByUserId(Long userId);
 }
