@@ -20,17 +20,20 @@ import org.springframework.web.method.support.ModelAndViewContainer;
  */
 @Component
 public class LoginUserResolver implements HandlerMethodArgumentResolver {
-
     @Autowired
     private UserService userService;
 
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
-        return methodParameter.getParameterType().isAssignableFrom(User.class) && methodParameter.hasParameterAnnotation(LoginUser.class);
+        // 检查参数类型并判断注解，只有符合并返回true,才会执行下面解析参数的方法
+        return methodParameter.getParameterType().isAssignableFrom(User.class)
+                && methodParameter.hasParameterAnnotation(LoginUser.class);
     }
 
     @Override
-    public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
+    public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer,
+                                  NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory)
+            throws Exception {
         // 获取作用域仅为request中的UserId参数，这个参数是再interceptor塞进去的
         Object attribute = nativeWebRequest.getAttribute(LoginInterceptor.USER_KEY, RequestAttributes.SCOPE_REQUEST);
         if (attribute == null) {

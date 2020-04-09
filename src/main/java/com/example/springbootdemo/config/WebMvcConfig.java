@@ -47,6 +47,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
         resolvers.add(loginUserResolver);
     }
 
+    /**
+     * 解决中文乱码 日期格式化
+     *
+     * @param converters
+     */
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         for (HttpMessageConverter<?> httpMessageConverter : converters) {

@@ -16,18 +16,17 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
-
     public static final String TOKEN_KEY = "token";
     public static final String USER_KEY = "userId";
 
-
     /**
      * @return 返回true 就可以跳转刀controller 否则返回500
-     * @throws Exception exception
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request,
+                             HttpServletResponse response, Object handler) {
         TokenLogin annotation;
+        // 方法添加了@TokenLogin注解的才需要判断token是否存在，并判断是否登录
         if (handler instanceof HandlerMethod) {
             annotation = ((HandlerMethod) handler).getMethodAnnotation(TokenLogin.class);
         } else {
@@ -47,7 +46,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             // FIXME 这里要有全局异常捕获类去捕获这个异常
             throw new RuntimeException("Token不能为空");
         }
-        // FIXME 通过token查找userId 例如从redis中查找
+        // FIXME 通过token查找userId 例如从redis中查找 同时判断token是否超时
         Long userId = getUserIdByToken(token);
         request.setAttribute(USER_KEY, userId);
         return true;
